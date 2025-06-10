@@ -1,27 +1,27 @@
 // Modo Oscuro
-const toggleDarkModeButton = document.getElementById("toggleDarkMode");
-const body = document.body;
-const sunIcon = '<i class="ri-sun-line"></i>';
-const moonIcon = '<i class="ri-moon-line"></i>';
+// const toggleDarkModeButton = document.getElementById("toggleDarkMode");
+// const body = document.body;
+// const sunIcon = '<i class="ri-sun-line"></i>';
+// const moonIcon = '<i class="ri-moon-line"></i>';
 
 // Comprobar el estado guardado del modo oscuro en el localStorage
-if (localStorage.getItem("darkMode") === "enabled") {
-  body.classList.add("dark-mode");
-  toggleDarkModeButton.innerHTML = moonIcon;
-}
+// if (localStorage.getItem("darkMode") === "enabled") {
+//   body.classList.add("dark-mode");
+//   toggleDarkModeButton.innerHTML = moonIcon;
+// }
 
-toggleDarkModeButton.addEventListener("click", () => {
-  body.classList.toggle("dark-mode");
+// toggleDarkModeButton.addEventListener("click", () => {
+//   body.classList.toggle("dark-mode");
 
-  // Guardar el estado del modo oscuro en el localStorage
-  if (body.classList.contains("dark-mode")) {
-    localStorage.setItem("darkMode", "enabled");
-    toggleDarkModeButton.innerHTML = moonIcon;
-  } else {
-    localStorage.setItem("darkMode", "disabled");
-    toggleDarkModeButton.innerHTML = sunIcon;
-  }
-});
+//   // Guardar el estado del modo oscuro en el localStorage
+//   if (body.classList.contains("dark-mode")) {
+//     localStorage.setItem("darkMode", "enabled");
+//     toggleDarkModeButton.innerHTML = moonIcon;
+//   } else {
+//     localStorage.setItem("darkMode", "disabled");
+//     toggleDarkModeButton.innerHTML = sunIcon;
+//   }
+// });
 
 // Cerrar Sesión con confirmación
 document.getElementById("logoutButton").addEventListener("click", () => {
@@ -68,38 +68,27 @@ window.addEventListener("load", () => {
 
   if (anniversaryDate) {
     const anniversary = new Date(anniversaryDate);
-    const today = new Date();
+    const now = new Date();
 
-    // Calcular la diferencia en años, meses y días
-    let years = today.getFullYear() - anniversary.getFullYear();
-    let months = today.getMonth() - anniversary.getMonth();
-    let days = today.getDate() - anniversary.getDate();
+    // Calcular la diferencia total en milisegundos
+    const diffMs = now - anniversary;
 
-    // Si el mes actual es anterior al mes de aniversario, restamos 1 año
-    if (months < 0) {
-      years--;
-      months += 12; // Ajustamos los meses a 12 si restamos un año
+    // Calcular días totales, luego horas desde el último mes
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    // Si hoy es exactamente un mes desde el aniversario
+    if (diffDays >= 28 && diffDays <= 31) {
+      document.getElementById("daysCount").innerText =
+        `Hoy cumplimos 1 mes y ${diffHours} hora${diffHours === 1 ? '' : 's'} desde que comenzó nuestra historia de amor. Qué felicidad tan grande celebrar este primer mes a tu lado, mi amor. ¡Te adorooo ❤️!`;
+    } else {
+      // Si no es el día exacto, mostrar días y horas desde la fecha
+      document.getElementById("daysCount").innerText =
+        `Han pasado ${diffDays} día${diffDays === 1 ? '' : 's'} y ${diffHours} hora${diffHours === 1 ? '' : 's'} desde que comenzó nuestra historia. ¡Cada momento contigo vale oro! ❤️`;
     }
-
-    // Si el día actual es anterior al día de aniversario, restamos 1 mes
-    if (days < 0) {
-      months--;
-      // Ajustamos los días al último día del mes anterior
-      const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-      days += lastMonth.getDate();
-    }
-
-    // Función para manejar singular o plural
-    const yearText = years === 1 ? "año" : "años";
-    const monthText = months === 1 ? "mes" : "meses";
-    const dayText = days === 1 ? "día" : "días";
-
-    // Mostrar el número de años, meses y días en el dashboard
-    document.getElementById(
-      "daysCount"
-    ).innerText = `Ya han pasado ${years} ${yearText}, ${months} ${monthText} y ${days} ${dayText}, desde que comenzó nuestra historia de amor. Me alegra mucho estar aún a tu lado y disfrutar cada momento, eres la persona que amaré de por vida. ¡Te Amoo❤️!`;
   }
 });
+
 
 particlesJS("particles-js", {
   particles: {

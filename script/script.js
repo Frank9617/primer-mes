@@ -1,35 +1,9 @@
-
-// Modo Oscuro
-const toggleDarkModeButton = document.getElementById('toggleDarkMode');
-const body = document.body;
-const sunIcon = '<i class="ri-sun-line"></i>';
-const moonIcon = '<i class="ri-moon-line"></i>';
-
-// Comprobar el estado guardado del modo oscuro en el localStorage
-if (localStorage.getItem('darkMode') === 'enabled') {
-    body.classList.add('dark-mode');
-    toggleDarkModeButton.innerHTML = moonIcon;
-}
-
-toggleDarkModeButton.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    
-    // Guardar el estado del modo oscuro en el localStorage
-    if (body.classList.contains('dark-mode')) {
-        localStorage.setItem('darkMode', 'enabled');
-        toggleDarkModeButton.innerHTML = moonIcon;
-    } else {
-        localStorage.setItem('darkMode', 'disabled');
-        toggleDarkModeButton.innerHTML = sunIcon;
-    }
-});
-
 // Validación del formulario de inicio de sesión
 document.getElementById("loginForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const anniversaryDate = document.getElementById("anniversaryDate").value;
     // Modifica aquí la fecha de tu aniversario - AAAA-MM-DD
-    if (anniversaryDate === "2023-03-20") {
+    if (anniversaryDate === "2025-05-10") {
         // Guardar la fecha de aniversario en localStorage
         localStorage.setItem("anniversaryDate", anniversaryDate);
         window.location.href = "dashboard.html"; // Redirige al dashboard
